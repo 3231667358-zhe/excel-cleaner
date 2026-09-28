@@ -1,0 +1,31 @@
+# ---------- Python ----------
+__pycache__/
+*.pyc
+*.pyo
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+
+# ---------- 工具产生的结果文件 ----------
+# 本工具的产物默认不进仓库（自己跑出来的结果没必要提交）。
+# 但 examples/ 里的演示文件是作品展示要用的，必须显式放行，否则会被上面两行误伤。
+*_cleaned.csv
+*_cleaned.xlsx
+!examples/sample_dirty_cleaned.csv
+
+# ---------- Excel / 编辑器临时文件 ----------
+~$*.xlsx
+~$*.xlsm
+*.bak
+*.swp
+*.swo
+*~
+
+# ---------- IDE ----------
+.idea/
+.vscode/
+
+# ---------- 系统 ----------
+.DS_Store
+Thumbs.db
