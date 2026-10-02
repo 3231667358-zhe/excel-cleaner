@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>给你一句话</title>
+<style>
+:root{--red:#ff1b1b;--dark:#080000;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050000;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+body{display:grid;place-items:center;position:relative;color:#fff;}
+body::before{content:"";position:absolute;inset:-25%;background:radial-gradient(circle at 50% 42%,rgba(255,30,30,.72),rgba(120,0,0,.32) 28%,transparent 58%),repeating-linear-gradient(135deg,rgba(255,0,0,.16) 0 12px,transparent 12px 28px),linear-gradient(135deg,#250000,#030000 60%,#190000);filter:saturate(1.4) contrast(1.15);animation:bgpulse 1s ease-in-out infinite alternate}
+body::after{content:"";position:absolute;inset:0;background:rgba(255,0,0,0);animation:flash 1.7s infinite;pointer-events:none}
+.wrap{position:relative;z-index:5;text-align:center;padding:24px;transform-origin:center}
+.face{font-size:clamp(70px,22vw,150px);filter:drop-shadow(0 0 20px rgba(255,0,0,.8));animation:shake .16s infinite}
+.main{margin-top:14px;font-size:clamp(54px,16vw,118px);font-weight:1000;letter-spacing:.08em;white-space:nowrap;text-shadow:0 4px 0 #760000,0 0 14px #ff0000,0 0 40px #ff0000,0 0 80px rgba(255,0,0,.8);animation:rage .38s infinite alternate,shake .14s infinite}
+.sub{margin-top:18px;font-size:clamp(18px,5vw,30px);font-weight:800;color:#ffc4c4;letter-spacing:.18em;text-shadow:0 0 12px #c00;animation:blink .8s infinite alternate}
+.tip{margin-top:22px;font-size:14px;color:#ffddddaa;letter-spacing:.1em}
+.burst{position:absolute;z-index:3;font-size:clamp(26px,8vw,56px);pointer-events:none;animation:fly 1.5s linear forwards;filter:drop-shadow(0 0 8px red)}
+.ring{position:absolute;z-index:1;width:70vmin;height:70vmin;border:7px solid rgba(255,60,60,.65);border-radius:50%;box-shadow:0 0 30px red,inset 0 0 30px red;animation:ring 1.2s infinite ease-out}
+.ring.r2{animation-delay:.6s}
+@keyframes bgpulse{from{transform:scale(1) rotate(-.8deg)}to{transform:scale(1.08) rotate(.8deg)}}
+@keyframes flash{0%,78%,100%{background:transparent}82%{background:rgba(255,0,0,.30)}86%{background:rgba(255,255,255,.10)}90%{background:rgba(255,0,0,.18)}}
+@keyframes rage{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes shake{0%{translate:0 0;rotate:0deg}25%{translate:-3px 2px;rotate:-1.2deg}50%{translate:3px -2px;rotate:1.2deg}75%{translate:-2px -1px;rotate:-.8deg}100%{translate:2px 1px;rotate:.8deg}}
+@keyframes blink{from{opacity:.55}to{opacity:1}}
+@keyframes ring{0%{transform:scale(.45);opacity:.85}100%{transform:scale(1.5);opacity:0}}
+@keyframes fly{0%{transform:translate(0,0) scale(.5) rotate(0deg);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.8) rotate(var(--r));opacity:0}}
+</style>
+</head>
+<body>
+<div class="ring"></div><div class="ring r2"></div>
+<div class="wrap" id="wrap">
+  <div class="face">😡💢</div>
+  <div class="main">你个傻福</div>
+  <div class="sub">生 气 值 ： M A X</div>
+  <div class="tip">点一下屏幕，继续生气</div>
+</div>
+<script>
+const icons=['😡','💢','🔥','😤','❗'];
+function burst(x,y,n=9){
+  for(let i=0;i<n;i++){
+    const e=document.createElement('div');
+    e.className='burst';e.textContent=icons[Math.floor(Math.random()*icons.length)];
+    e.style.left=x+'px';e.style.top=y+'px';
+    const a=Math.random()*Math.PI*2,d=80+Math.random()*220;
+    e.style.setProperty('--x',Math.cos(a)*d+'px');
+    e.style.setProperty('--y',Math.sin(a)*d+'px');
+    e.style.setProperty('--r',(Math.random()*360-180)+'deg');
+    document.body.appendChild(e);setTimeout(()=>e.remove(),1600);
+  }
+}
+function randomBurst(){burst(innerWidth*(.2+Math.random()*.6),innerHeight*(.2+Math.random()*.6),5)}
+setInterval(randomBurst,650);
+document.addEventListener('pointerdown',e=>{burst(e.clientX,e.clientY,14); if(navigator.vibrate) navigator.vibrate([60,35,60]);});
+</script>
+</body>
+</html>
